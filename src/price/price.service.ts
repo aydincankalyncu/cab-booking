@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { BaseResult } from '../utils/result/base-result';
 import { SuccessResult } from '../utils/result/success-result';
 import { ErrorResult } from '../utils/result/error-result';
+import { CreatePriceDto, UpdatePriceDto } from './dtos';
 
 @Injectable()
 export class PriceService {
@@ -45,6 +46,53 @@ export class PriceService {
     try {
       const deletedAddressPrice = await this.priceModel.findByIdAndDelete(id);
       return new SuccessResult(`Successfully was deleted`, deletedAddressPrice);
+    } catch (error) {
+      return new ErrorResult('Error', error.message);
+    }
+  }
+  async createPrice(createPriceDto: CreatePriceDto): Promise<BaseResult> {
+    const { from, to, price, roundTripPrice, travelTime, distance } =
+      createPriceDto;
+    try {
+      const savedAddressPrice = new this.priceModel({
+        from,
+        to,
+        price,
+        roundTripPrice,
+        travelTime,
+        distance,
+      });
+      await savedAddressPrice.save();
+      return new SuccessResult(`Successfully was created`, savedAddressPrice);
+    } catch (error) {
+      return new ErrorResult('Error', error.message);
+    }
+  }
+  async updatePrice(updatePriceDto: UpdatePriceDto): Promise<BaseResult> {
+    const { id, from, to, price, roundTripPrice, travelTime, distance } =
+      updatePriceDto;
+    try {
+      const updatedAddressPrice = await this.priceModel.findById(id).exec();
+      if (!updatedAddressPrice) {
+        return new ErrorResult(
+          `There is no address price to update`,
+          updatePriceDto,
+        );
+      }
+      const updateFilter = {
+        from: from,
+        to: to,
+        price: price,
+        roundTripPrice: roundTripPrice,
+        travelTime: travelTime,
+        distance: distance,
+      };
+      const result = await this.priceModel.findOneAndUpdate(
+        { id: id },
+        updateFilter,
+        { new: true },
+      );
+      return new SuccessResult(`Success`, result);
     } catch (error) {
       return new ErrorResult('Error', error.message);
     }

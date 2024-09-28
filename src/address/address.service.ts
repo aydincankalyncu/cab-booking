@@ -7,8 +7,6 @@ import { SuccessResult } from '../utils/result/success-result';
 import { ErrorResult } from '../utils/result/error-result';
 import { CreateAddressDto, UpdateAddressDto } from './dtos';
 
-// TODO Create and update sections will implement.
-
 @Injectable()
 export class AddressService {
   constructor(
