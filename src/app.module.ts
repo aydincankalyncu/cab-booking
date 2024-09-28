@@ -7,9 +7,15 @@ import { AddressModule } from './address/address.module';
 import { PriceModule } from './price/price.module';
 import { CarModule } from './car/car.module';
 import { ResortModule } from './resort/resort.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads/',
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
