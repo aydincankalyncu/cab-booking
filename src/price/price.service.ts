@@ -51,7 +51,7 @@ export class PriceService {
     }
   }
   async createPrice(createPriceDto: CreatePriceDto): Promise<BaseResult> {
-    const { from, to, price, roundTripPrice, travelTime, distance } =
+    const { from, to, price, roundTripPrice, travelTime, distance, car } =
       createPriceDto;
     try {
       const savedAddressPrice = new this.priceModel({
@@ -61,6 +61,7 @@ export class PriceService {
         roundTripPrice,
         travelTime,
         distance,
+        car,
       });
       await savedAddressPrice.save();
       return new SuccessResult(`Successfully was created`, savedAddressPrice);
@@ -69,7 +70,7 @@ export class PriceService {
     }
   }
   async updatePrice(updatePriceDto: UpdatePriceDto): Promise<BaseResult> {
-    const { id, from, to, price, roundTripPrice, travelTime, distance } =
+    const { id, from, to, price, roundTripPrice, travelTime, distance, car } =
       updatePriceDto;
     try {
       const updatedAddressPrice = await this.priceModel.findById(id).exec();
@@ -86,6 +87,7 @@ export class PriceService {
         roundTripPrice: roundTripPrice,
         travelTime: travelTime,
         distance: distance,
+        car: car,
       };
       const result = await this.priceModel.findOneAndUpdate(
         { id: id },

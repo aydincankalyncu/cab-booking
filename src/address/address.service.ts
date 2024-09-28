@@ -22,7 +22,7 @@ export class AddressService {
     }
   }
 
-  async getCategoryById(id: string): Promise<BaseResult> {
+  async getAddressById(id: string): Promise<BaseResult> {
     try {
       const address = await this.addressModel.findById(id).exec();
       if (!address) {

@@ -1,20 +1,24 @@
-export class CreatePriceDto {
+export class CreateResortDto {
+  name: string;
+  isActive: boolean;
   from: string;
   to: string;
   price: number;
   roundTripPrice: number;
-  travelTime: number;
   distance: number;
+  image: string;
   car: string;
 }
 
-export class UpdatePriceDto {
+export class UpdateResortDto {
   id: string;
+  name: string;
+  isActive: boolean;
   from: string;
-  to: string;
+  to: string;w
   price: number;
   roundTripPrice: number;
-  travelTime: number;
   distance: number;
+  image: string;
   car: string;
 }
