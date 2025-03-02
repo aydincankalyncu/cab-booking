@@ -4,27 +4,36 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AddressModule } from './address/address.module';
-import { PriceModule } from './price/price.module';
+import { LocationModule } from './price/location.module';
 import { CarModule } from './car/car.module';
 import { ResortModule } from './resort/resort.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { MulterModule } from '@nestjs/platform-express';
+import { ReservationModule } from './reservation/reservation.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './uploads',
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: '/uploads/',
     }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    MongooseModule.forRoot(process.env.MONGO_URL),
+    MongooseModule.forRoot(
+      'mongodb+srv://innsbruck:InnsbruckTaxi!.@mycluster.fbnnw.mongodb.net/taxi-booking?retryWrites=true&w=majority&appName=MyCluster',
+    ),
     AddressModule,
-    PriceModule,
+    LocationModule,
     CarModule,
     ResortModule,
+    ReservationModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

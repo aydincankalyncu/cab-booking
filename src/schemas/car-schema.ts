@@ -1,5 +1,5 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
 export type CarDocument = HydratedDocument<Car>;
 
@@ -10,13 +10,13 @@ export class Car {
   @Prop({ default: true })
   isActive: boolean;
   @Prop({ required: true })
-  type: string;
-  @Prop({ required: true })
   capacity: number;
   @Prop({ required: true })
   luggage: number;
   @Prop({ required: true })
   image: string;
+  @Prop({ required: true })
+  description: string;
 }
 
 export const CarSchema = SchemaFactory.createForClass(Car);

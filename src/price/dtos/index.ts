@@ -1,20 +1,29 @@
-export class CreatePriceDto {
-  from: string;
-  to: string;
-  price: number;
-  roundTripPrice: number;
-  travelTime: number;
-  distance: number;
-  car: string;
+export class CreateLocationDto {
+  startDestination: string;
+  endDestination: string;
+  travelTime: string;
+  isActive: boolean;
+  description: string;
+  distance: string;
+  cars: CarDto[];
 }
 
-export class UpdatePriceDto {
+export class UpdateLocationDto {
   id: string;
-  from: string;
-  to: string;
-  price: number;
-  roundTripPrice: number;
-  travelTime: number;
-  distance: number;
-  car: string;
+  startDestination: string;
+  endDestination: string;
+  description: string;
+  isActive: boolean;
+  travelTime: string;
+  distance: string;
+  cars: CarDto[];
+}
+
+class CarDto {
+  id: string;
+  name: string;
+  priceOneWay: number;
+  priceOneWayDiscount: number;
+  priceDoubleWay: number;
+  priceDoubleWayDiscount: number;
 }

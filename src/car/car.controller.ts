@@ -12,8 +12,6 @@ import { CarService } from './car.service';
 import { BaseResult } from '../utils/result/base-result';
 import { CreateCarDto, UpdateCarDto } from './dtos';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 
 @Controller('cars')
 export class CarController {
@@ -27,46 +25,31 @@ export class CarController {
     return await this.carService.getById(id);
   }
   @Post()
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './uploads/cars',
-        filename: (req, file, cb) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          cb(null, `${uniqueSuffix}${ext}`);
-        },
-      }),
-    }),
-  )
+  @UseInterceptors(FileInterceptor('file'))
   async createCar(
     @Body() createCarDto: CreateCarDto,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file?: Express.Multer.File,
   ): Promise<BaseResult> {
-    createCarDto.image = file ? `/uploads/cars/${file.filename}` : null;
-    return await this.carService.createCar(createCarDto);
+    return await this.carService.createCar(file, createCarDto);
   }
   @Post('update')
   @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './uploads/cars',
-        filename: (req, file, cb) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          cb(null, `${uniqueSuffix}${ext}`);
-        },
-      }),
+    FileInterceptor('file', {
+      limits: { fileSize: 5 * 1024 * 1024 },
+      fileFilter: (req, file, cb) => {
+        if (!file) {
+          cb(null, false);
+        } else {
+          cb(null, true);
+        }
+      },
     }),
   )
   async updateCar(
     @Body() updateCarDto: UpdateCarDto,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file?: Express.Multer.File,
   ): Promise<BaseResult> {
-    updateCarDto.image = file ? `/uploads/cars/${file.filename}` : null;
-    return await this.carService.updateCar(updateCarDto);
+    return await this.carService.updateCar(file, updateCarDto);
   }
   @Delete(':id')
   async deleteCar(@Param('id') id: string): Promise<BaseResult> {

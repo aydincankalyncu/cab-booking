@@ -31,13 +31,24 @@ export class CarService {
       return new ErrorResult('Error', error.message);
     }
   }
-  async createCar(createCarDto: CreateCarDto): Promise<BaseResult> {
-    const { name, isActive, type, luggage, capacity, image } = createCarDto;
+  async createCar(
+    file: Express.Multer.File,
+    createCarDto: CreateCarDto,
+  ): Promise<BaseResult> {
+    const { name, isActive, description, luggage, capacity } = createCarDto;
     try {
+      let image = '';
+      if (file) {
+        const imagePath = `uploads/cars/${file.originalname}`;
+        image = imagePath;
+
+        await this.saveImage(file, imagePath);
+      }
+
       const savedCar = new this.carModel({
         name,
         isActive,
-        type,
+        description,
         luggage,
         capacity,
         image,
@@ -48,25 +59,34 @@ export class CarService {
       return new ErrorResult('Error', error.message);
     }
   }
-  async updateCar(updateCarDto: UpdateCarDto): Promise<BaseResult> {
-    const { id, name, isActive, type, luggage, capacity, image } = updateCarDto;
+  async updateCar(
+    file: Express.Multer.File,
+    updateCarDto: UpdateCarDto,
+  ): Promise<BaseResult> {
+    const { id, name, isActive, description, luggage, capacity } = updateCarDto;
     try {
       const car = await this.carModel.findById(id).exec();
       if (!car) {
         return new ErrorResult('There is no car.', id);
       }
-      // Delete the old image from system.
-      await this.deleteFile(car.image);
+
+      let image = car.image;
+      if (file) {
+        await this.deleteFile(car.image);
+        const imagePath = `uploads/cars/${file.originalname}`;
+        image = imagePath;
+        await this.saveImage(file, imagePath);
+      }
       const updateFilter = {
         name: name,
         isActive: isActive,
-        type: type,
+        description: description,
         luggage: luggage,
         capacity: capacity,
         image: image,
       };
       const result = await this.carModel.findOneAndUpdate(
-        { id: id },
+        { _id: id },
         updateFilter,
         { new: true },
       );
@@ -99,5 +119,20 @@ export class CarService {
         console.error('Error while deleting file:', error);
       }
     }
+  }
+
+  private async saveImage(
+    file: Express.Multer.File,
+    imagePath: string,
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(imagePath, file.buffer, (error) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 }

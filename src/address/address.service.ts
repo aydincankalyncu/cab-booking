@@ -68,7 +68,7 @@ export class AddressService {
       }
       const updateFilter = { name: name, isActive: isActive };
       const result = await this.addressModel.findOneAndUpdate(
-        { id: id },
+        { _id: id },
         updateFilter,
         { new: true },
       );
