@@ -3,7 +3,8 @@ import { Car } from './car-schema';
 import { Location } from './location-schema';
 import { Resort } from './resort-schema';
 import { Reservation } from './reservation-schema';
+import { Stats } from './stats-schema';
 
-const entities = [Address, Location, Car, Resort, Reservation];
+const entities = [Address, Location, Car, Resort, Reservation, Stats];
 
 export default entities;

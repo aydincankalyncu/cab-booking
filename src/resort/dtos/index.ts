@@ -1,6 +1,7 @@
 export class CreateResortDto {
   name: string;
   isActive: boolean;
+  liveCamUrl: string;
   startDestination: string;
   endDestination: string;
   travelTime: string;
@@ -13,6 +14,7 @@ export class UpdateResortDto {
   id: string;
   name: string;
   isActive: boolean;
+  liveCamUrl: string;
   startDestination: string;
   endDestination: string;
   travelTime: string;

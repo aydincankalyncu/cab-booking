@@ -47,6 +47,7 @@ export class ReservationService {
         try {
             const newReservation = new this.reservationModel({
                 ...createReservationDto,
+                pickUpDate: createReservationDto.pickupDate,
                 isDeleted: false
             });
 
@@ -60,6 +61,15 @@ export class ReservationService {
             }
 
             return new SuccessResult('Success', newReservation);
+        } catch (error) {
+            return new ErrorResult('Error', error.message);
+        }
+    }
+
+    async getTotalCountOfReservations() {
+        try {
+            const count = await this.reservationModel.countDocuments({ isDeleted: false });
+            return new SuccessResult('Success', count)
         } catch (error) {
             return new ErrorResult('Error', error.message);
         }

@@ -33,6 +33,9 @@ export class Resort {
   destination: string;
 
   @Prop()
+  liveCamUrl: string;
+  
+  @Prop()
   description: string;
 
   @Prop({ required: true })

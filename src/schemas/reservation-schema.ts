@@ -10,7 +10,7 @@ export class Reservation {
   @Prop()
   address: string;
   @Prop()
-  pickUpDate: string; //With pickup time
+  pickUpDate: string;
   @Prop()
   luggageDetails: string;
   @Prop({ required: true })

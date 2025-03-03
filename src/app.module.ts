@@ -12,6 +12,7 @@ import { join } from 'path';
 import { MulterModule } from '@nestjs/platform-express';
 import { ReservationModule } from './reservation/reservation.module';
 import { EmailModule } from './email/email.module';
+import { StatsModule } from './stats/stats.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { EmailModule } from './email/email.module';
     ResortModule,
     ReservationModule,
     EmailModule,
+    StatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

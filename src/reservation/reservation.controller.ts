@@ -23,4 +23,9 @@ export class ReservationController {
     ): Promise<BaseResult> {
         return await this.reservationService.createReservation(createReservationDto);
     }
+
+    @Get("count")
+    async countOfReservations(): Promise<BaseResult> {
+        return await this.reservationService.getTotalCountOfReservations();
+    }
 }

@@ -37,7 +37,7 @@ export class ResortService {
     file: Express.Multer.File,
     createResortDto: CreateResortDto,
   ): Promise<BaseResult> {
-    const { name, isActive, startDestination, endDestination, description, travelTime, distance, cars } =
+    const { name, isActive, liveCamUrl, startDestination, endDestination, description, travelTime, distance, cars } =
       createResortDto;
     try {
       let image = '';
@@ -54,6 +54,7 @@ export class ResortService {
         name,
         isActive,
         image,
+        liveCamUrl,
         startingPoint: startDestination,
         destination: endDestination,
         duration: travelTime,
@@ -68,7 +69,9 @@ export class ResortService {
           priceDoubleWayDiscount: car.priceDoubleWayDiscount,
         })),
       });
+
       const savedResort = await this.resortModel.insertMany(newResort);
+
       return new SuccessResult('Success', savedResort);
     } catch (error) {
       return new ErrorResult('Error', error.message);
@@ -82,7 +85,7 @@ export class ResortService {
       id,
       name,
       isActive,
-      startDestination, endDestination, description, travelTime, distance, cars
+      startDestination, liveCamUrl, endDestination, description, travelTime, distance, cars
     } = updateResortDto;
     try {
       const updatedResort = await this.resortModel.findById(id).exec();
@@ -111,6 +114,7 @@ export class ResortService {
           duration: travelTime,
           distance,
           description,
+          liveCamUrl,
           cars: parsedCars?.map((car) => ({
             carId: car.id,
             name: car.name,
