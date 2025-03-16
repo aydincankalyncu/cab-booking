@@ -13,6 +13,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { ReservationModule } from './reservation/reservation.module';
 import { EmailModule } from './email/email.module';
 import { StatsModule } from './stats/stats.module';
+import { SiteconfigModule } from './siteconfig/siteconfig.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { StatsModule } from './stats/stats.module';
     ReservationModule,
     EmailModule,
     StatsModule,
+    SiteconfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],
