@@ -6,6 +6,9 @@ export class CreateSiteConfigDto {
     instagramUrl: string;
     facebookUrl: string;
     twitterUrl: string;
+    mailHost: string;
+    mailPort: string;
+    mailFrom: string;
 }
 
 
@@ -18,4 +21,7 @@ export class UpdateSiteConfigDto {
     instagramUrl: string;
     facebookUrl: string;
     twitterUrl: string;
+    mailHost: string;
+    mailPort: string;
+    mailFrom: string;
 }

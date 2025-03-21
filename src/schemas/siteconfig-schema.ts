@@ -27,6 +27,15 @@ export class SiteConfig {
     @Prop()
     twitterUrl: string;
 
+    @Prop()
+    mailHost: string;
+
+    @Prop()
+    mailPort: string;
+
+    @Prop()
+    mailFrom: string;
+
 }
 
 export const SiteConfigSchema = SchemaFactory.createForClass(SiteConfig);
