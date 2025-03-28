@@ -14,6 +14,7 @@ import { ReservationModule } from './reservation/reservation.module';
 import { EmailModule } from './email/email.module';
 import { StatsModule } from './stats/stats.module';
 import { SiteconfigModule } from './siteconfig/siteconfig.module';
+import { EditorModule } from './editor/editor.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { SiteconfigModule } from './siteconfig/siteconfig.module';
     EmailModule,
     StatsModule,
     SiteconfigModule,
+    EditorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
