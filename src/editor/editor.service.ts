@@ -40,7 +40,7 @@ export class EditorService {
     file: Express.Multer.File,
     createEditorDto: CreateEditorDto,
   ): Promise<BaseResult> {
-    const { content } = createEditorDto;
+    const { content, editorName } = createEditorDto;
     try {
       let image = "";
       if (file) {
@@ -51,6 +51,7 @@ export class EditorService {
 
       const savedEditor = new this.editorModel({
         content,
+        editorName,
         fileName: image,
       });
 
@@ -65,7 +66,7 @@ export class EditorService {
     file: Express.Multer.File,
     updateEditorDto: UpdateEditorDto,
   ): Promise<BaseResult> {
-    const { content, id } = updateEditorDto;
+    const { content, id, editorName } = updateEditorDto;
     try {
       const editor = await this.editorModel.findById(id).exec();
       if (!editor) {
@@ -82,7 +83,8 @@ export class EditorService {
 
       const updateFiler = {
         content: content,
-        fileName: image
+        fileName: image,
+        editorName: editorName,
       };
 
       const result = await this.editorModel.findOneAndUpdate(

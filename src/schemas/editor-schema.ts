@@ -7,6 +7,8 @@ export type EditorDocument = HydratedDocument<Editor>;
 export class Editor {
     @Prop({required: true})
     fileName: string;
+    @Prop({required: true})
+    editorName: string;
 
     @Prop({required: true})
     content: string;

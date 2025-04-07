@@ -4,7 +4,7 @@ import { BaseResult } from "src/utils/result/base-result";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { CreateEditorDto, UpdateEditorDto } from "./dtos";
 
-@Controller("editor")
+@Controller("editors")
 export class EditorController {
   constructor(private readonly editorService: EditorService) {}
 
