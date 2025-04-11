@@ -15,6 +15,7 @@ import { EmailModule } from './email/email.module';
 import { StatsModule } from './stats/stats.module';
 import { SiteconfigModule } from './siteconfig/siteconfig.module';
 import { EditorModule } from './editor/editor.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { EditorModule } from './editor/editor.module';
     StatsModule,
     SiteconfigModule,
     EditorModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

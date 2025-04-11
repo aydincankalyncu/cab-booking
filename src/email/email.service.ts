@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
+import { ForwardReservationModel } from 'src/admin/dtos';
 import { CreateReservationDto } from 'src/reservation/dtos';
-import { BaseResult } from 'src/utils/result/base-result';
 
 @Injectable()
 export class EmailService {
@@ -34,10 +34,6 @@ export class EmailService {
                 html: this.getReservationConfirmationTemplate(reservation),
             };
 
-            
-
-            console.log(mailOptions);
-
             await this.transporter.sendMail(mailOptions);
 
             return true;
@@ -45,6 +41,24 @@ export class EmailService {
             console.log('Email sending failed: ', error);
             return false;
         }
+    }
+
+    async forwardReservation(forwardReservationModel: ForwardReservationModel) : Promise<boolean>{
+        try {
+            const mailOptions = {
+                from: this.configService.get('MAIL_FROM'),
+                to: forwardReservationModel.mailTo,
+                subject: 'Forwarding Reservation',
+                html: this.getReservationForwardTemplate(forwardReservationModel),
+            };
+
+            await this.transporter.sendMail(mailOptions);
+            return true;
+        } catch (error) {
+            console.log('Email sending failed: ', error);
+            return false;
+        }
+        return true;
     }
 
     private getReservationConfirmationTemplate(reservation: CreateReservationDto): string {
@@ -68,5 +82,27 @@ export class EmailService {
           <p>Thank you for choosing our service!</p>
         </div>
       `;
+    }
+
+    private getReservationForwardTemplate(forwardReservationModel: ForwardReservationModel): string {
+        return `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee;">
+          <h2>Reservation Confirmation</h2>
+          <p>Dear ${forwardReservationModel.name},</p>
+          <p>Thank you for your reservation. Below are your reservation details:</p>
+          
+          <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 15px 0;">
+            <p><strong>Hotel:</strong> ${forwardReservationModel.hotelName || 'N/A'}</p>
+            <p><strong>Address:</strong> ${forwardReservationModel.address || 'N/A'}</p>
+            <p><strong>Pickup Date:</strong> ${forwardReservationModel.pickUpDate}</p>
+            <p><strong>Luggage Details:</strong> ${forwardReservationModel.luggageDetails}</p>
+            <p><strong>Transfer Type:</strong> ${forwardReservationModel.transferType}</p>
+            <p><strong>Passenger Count:</strong> ${forwardReservationModel.passengerCount}</p>
+            <p><strong>Payment Method:</strong> ${forwardReservationModel.paymentType}</p>
+          </div>
+          
+          <p>If you have any questions or need to make changes to your reservation, please contact us.</p>
+          <p>Thank you for choosing our service!</p>
+        </div>`;
     }
 }
