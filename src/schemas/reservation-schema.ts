@@ -12,6 +12,8 @@ export class Reservation {
   @Prop()
   pickUpDate: string;
   @Prop()
+  transferTime: string;
+  @Prop()
   luggageDetails: string;
   @Prop({ required: true })
   name: string;

@@ -25,6 +25,9 @@ export class SiteconfigService {
 
   async create(createSiteConfigDto: CreateSiteConfigDto): Promise<BaseResult> {
     try {
+
+      const deleted = await this.siteConfigModel.deleteMany();
+      
       const createdSiteConfig = new this.siteConfigModel({
         ...createSiteConfigDto,
       });

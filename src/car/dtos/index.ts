@@ -4,6 +4,7 @@ export class CreateCarDto {
   capacity: number;
   luggage: number;
   description: string;
+  image: string;
 }
 
 export class UpdateCarDto {
@@ -13,4 +14,5 @@ export class UpdateCarDto {
   capacity: number;
   luggage: number;
   description: string;
+  image: string;
 }

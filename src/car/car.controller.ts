@@ -25,31 +25,16 @@ export class CarController {
     return await this.carService.getById(id);
   }
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
   async createCar(
     @Body() createCarDto: CreateCarDto,
-    @UploadedFile() file?: Express.Multer.File,
   ): Promise<BaseResult> {
-    return await this.carService.createCar(file, createCarDto);
+    return await this.carService.createCar(createCarDto);
   }
   @Post('update')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      limits: { fileSize: 5 * 1024 * 1024 },
-      fileFilter: (req, file, cb) => {
-        if (!file) {
-          cb(null, false);
-        } else {
-          cb(null, true);
-        }
-      },
-    }),
-  )
   async updateCar(
-    @Body() updateCarDto: UpdateCarDto,
-    @UploadedFile() file?: Express.Multer.File,
+    @Body() updateCarDto: UpdateCarDto
   ): Promise<BaseResult> {
-    return await this.carService.updateCar(file, updateCarDto);
+    return await this.carService.updateCar(updateCarDto);
   }
   @Delete(':id')
   async deleteCar(@Param('id') id: string): Promise<BaseResult> {
