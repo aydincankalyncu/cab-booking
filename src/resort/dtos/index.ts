@@ -8,6 +8,7 @@ export class CreateResortDto {
   description: string;
   distance: string;
   cars: string;
+  image: string;
 }
 
 export class UpdateResortDto {
@@ -21,6 +22,7 @@ export class UpdateResortDto {
   description: string;
   distance: string;
   cars: string;
+  image: string;
 }
 
 

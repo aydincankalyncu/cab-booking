@@ -4,14 +4,11 @@ import {
   Delete,
   Get,
   Param,
-  Post,
-  UploadedFile,
-  UseInterceptors,
+  Post
 } from '@nestjs/common';
 import { CarService } from './car.service';
 import { BaseResult } from '../utils/result/base-result';
 import { CreateCarDto, UpdateCarDto } from './dtos';
-import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('cars')
 export class CarController {
