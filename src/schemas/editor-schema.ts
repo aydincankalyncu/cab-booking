@@ -6,10 +6,9 @@ export type EditorDocument = HydratedDocument<Editor>;
 @Schema({timestamps: true})
 export class Editor {
     @Prop({required: true})
-    fileName: string;
+    image: string;
     @Prop({required: true})
     editorName: string;
-
     @Prop({required: true})
     content: string;
 }
