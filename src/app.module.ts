@@ -18,12 +18,6 @@ import { EditorModule } from './editor/editor.module';
 
 @Module({
   imports: [
-    MulterModule.register({
-      dest: './uploads',
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'),
-    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
